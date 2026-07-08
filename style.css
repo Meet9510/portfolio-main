@@ -13,6 +13,12 @@
   --glass-border: rgba(176,131,71,0.15);
   --text: #f5f0e8;
   --muted: rgba(245,240,232,0.5);
+  
+  /* Carousel Config */
+  --carousel-translate-x: 340px;
+  --carousel-translate-x-far: 520px;
+  --card-width: 320px;
+  --card-height: 440px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;}
@@ -226,8 +232,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 .stack-card {
   position: absolute;
-  width: 320px;
-  height: 440px;
+  width: var(--card-width);
+  height: var(--card-height);
   background: rgba(16, 14, 10, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
@@ -293,7 +299,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .stack-card.prev {
   opacity: 0.55;
   pointer-events: auto;
-  transform: translate3d(-340px, 0, -50px) scale(0.88) rotateY(20deg);
+  transform: translate3d(calc(-1 * var(--carousel-translate-x)), 0, -80px) scale(0.85) rotateY(15deg);
   z-index: 5;
 }
 
@@ -301,20 +307,20 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .stack-card.next {
   opacity: 0.55;
   pointer-events: auto;
-  transform: translate3d(340px, 0, -50px) scale(0.88) rotateY(-20deg);
+  transform: translate3d(var(--carousel-translate-x), 0, -80px) scale(0.85) rotateY(-15deg);
   z-index: 5;
 }
 
 /* Far left/right cards (fading out) */
 .stack-card.far-prev {
   opacity: 0.15;
-  transform: translate3d(-520px, 0, -150px) scale(0.75) rotateY(35deg);
+  transform: translate3d(calc(-1 * var(--carousel-translate-x-far)), 0, -150px) scale(0.72) rotateY(30deg);
   z-index: 2;
 }
 
 .stack-card.far-next {
   opacity: 0.15;
-  transform: translate3d(520px, 0, -150px) scale(0.75) rotateY(-35deg);
+  transform: translate3d(var(--carousel-translate-x-far), 0, -150px) scale(0.72) rotateY(-30deg);
   z-index: 2;
 }
 
@@ -805,32 +811,21 @@ footer{background:var(--dark);border-top:1px solid var(--glass-border);padding:5
   .about-section{padding:80px 30px;}
   .about-cards{grid-template-columns:1fr;}
   
+  :root {
+    --carousel-translate-x: 230px;
+    --carousel-translate-x-far: 380px;
+    --card-width: 250px;
+    --card-height: 380px;
+  }
+  
   .advantages-stack-wrap {
     height: auto;
     margin-top: 30px;
-    overflow: hidden;
+    overflow: visible;
   }
+  
   .carousel-viewport {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    perspective: none;
-  }
-  .stack-card {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 240px;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: none !important;
-    z-index: auto !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  }
-  .carousel-nav {
-    display: none;
+    height: 420px;
   }
   
   .stats-bar{flex-direction:column;padding:30px 20px;gap:20px;}
@@ -849,6 +844,75 @@ footer{background:var(--dark);border-top:1px solid var(--glass-border);padding:5
   .lightbox-media-side{border-right:none;border-bottom:1px solid var(--glass-border);padding:20px;flex:none;}
   .lightbox-media-side img{max-height:260px;}
   .lightbox-info-side{padding:30px;}
+}
+@media(max-width:767px){
+  :root {
+    --carousel-translate-x: 140px;
+    --carousel-translate-x-far: 230px;
+    --card-width: 200px;
+    --card-height: 320px;
+  }
+  .carousel-viewport {
+    height: 360px;
+  }
+  .card-head {
+    margin-bottom: 12px;
+  }
+  .card-num {
+    font-size: 28px;
+  }
+  .card-icon-circle {
+    width: 40px;
+    height: 40px;
+  }
+  .card-svg {
+    width: 18px;
+    height: 18px;
+  }
+  .card-body h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .card-body p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .carousel-nav {
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .nav-arrow {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+@media(max-width:400px){
+  :root {
+    --carousel-translate-x: 95px;
+    --carousel-translate-x-far: 150px;
+    --card-width: 160px;
+    --card-height: 270px;
+  }
+  .carousel-viewport {
+    height: 300px;
+  }
+  .card-body h3 {
+    font-size: 13px;
+  }
+  .card-body p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 @media(max-width:576px){
   .bento-grid{columns:1;}

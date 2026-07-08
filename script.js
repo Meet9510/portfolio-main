@@ -454,6 +454,37 @@ cards.forEach((card, index) => {
   });
 });
 
+// Touch support for swiping
+let touchStartX = 0;
+let touchEndX = 0;
+const carouselViewport = document.querySelector('.carousel-viewport');
+
+if (carouselViewport) {
+  carouselViewport.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  carouselViewport.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+  }, { passive: true });
+}
+
+function handleSwipe() {
+  const minSwipeDistance = 50;
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > minSwipeDistance) {
+    if (diff > 0) {
+      // Swiped left -> next card
+      carouselIndex = (carouselIndex + 1) % cards.length;
+    } else {
+      // Swiped right -> prev card
+      carouselIndex = (carouselIndex - 1 + cards.length) % cards.length;
+    }
+    updateCarousel();
+  }
+}
+
 // Initial load
 if (cards.length > 0) {
   updateCarousel();
