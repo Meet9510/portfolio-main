@@ -591,3 +591,6 @@ if (revealText) {
 
 
 
+import { inject } from "@vercel/analytics"
+
+inject()
